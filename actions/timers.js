@@ -3,6 +3,7 @@ import Timer from "@models/timer";
 import { connectToDB } from "@utils/database";
 import formatValidationError from "@utils/formatValidationError";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function getTimers() {
     await connectToDB();
@@ -54,6 +55,22 @@ export async function createTimer(formData) {
         console.error(data);
         return data;
     }
+}
+
+export async function deleteTimer(timerId) {
+    "use server";
+
+    await connectToDB();
+
+    await Timer.findByIdAndDelete(timerId);
+
+    const data = {
+        action: "deleteTimer",
+        success: true,
+    };
+    console.log(data);
+
+    redirect("/");
 }
 
 export async function saveHistoryEntry(formData, timerId, seconds_passed) {
