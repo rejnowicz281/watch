@@ -116,3 +116,26 @@ export async function saveHistoryEntry(formData, timerId, seconds_passed) {
         return data;
     }
 }
+
+export async function deleteHistoryEntry(timerId, entryId) {
+    "use server";
+
+    await connectToDB();
+
+    await Timer.findByIdAndUpdate(
+        timerId,
+        {
+            $pull: { history: { _id: entryId } },
+        },
+        { new: true }
+    );
+
+    revalidatePath(`/timers/${timerId}`);
+
+    const data = {
+        action: "deleteHistoryEntry",
+        success: true,
+    };
+    console.log(data);
+    return data;
+}

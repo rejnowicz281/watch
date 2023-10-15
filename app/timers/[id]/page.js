@@ -12,7 +12,7 @@ export default async function TimerPage({ params: { id } }) {
             <DeleteButton action={deleteTimer} timerId={id} />
             <TimerInteractivity timerId={id} length={timer.length} saveHistoryEntry={saveHistoryEntry} />
             <hr />
-            <History history={timer.history} timerLength={timer.length} />
+            <History history={timer.history} timerLength={timer.length} timerId={timer.id} />
         </div>
     );
 }
