@@ -1,6 +1,7 @@
 import HistoryEntry from "@models/historyEntry";
 import Timer from "@models/timer";
 import { connectToDB } from "@utils/database";
+import formatValidationError from "@utils/formatValidationError";
 import { revalidatePath } from "next/cache";
 
 export async function getTimers() {
@@ -44,11 +45,13 @@ export async function createTimer(formData) {
         console.log(data);
         return data;
     } catch (err) {
+        const validationError = formatValidationError(err);
         const data = {
             action: "createTimer",
             success: false,
+            errors: validationError,
         };
-        console.log(data, err);
+        console.error(data);
         return data;
     }
 }

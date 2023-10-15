@@ -1,4 +1,4 @@
-import { getTimers } from "@actions/timers";
+import { createTimer, getTimers } from "@actions/timers";
 import Link from "next/link";
 import NewTimer from "./components/NewTimer";
 
@@ -7,7 +7,7 @@ export default async function Home() {
 
     return (
         <>
-            <NewTimer />
+            <NewTimer createTimer={createTimer} />
             <div>
                 {timers.map((timer) => (
                     <li>
