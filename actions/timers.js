@@ -56,13 +56,15 @@ export async function createTimer(formData) {
     }
 }
 
-export async function saveHistoryEntry(timerId, note, seconds_passed) {
+export async function saveHistoryEntry(formData, timerId, seconds_passed) {
     "use server";
 
     await connectToDB();
 
+    const note = formData.get("note");
+
     const entry = new HistoryEntry({
-        note,
+        note: note || undefined,
         seconds_passed,
     });
 
@@ -86,11 +88,14 @@ export async function saveHistoryEntry(timerId, note, seconds_passed) {
         console.log(data);
         return data;
     } catch (err) {
+        console.log(err);
+        const validationError = formatValidationError(err);
         const data = {
             action: "saveHistoryEntry",
             success: false,
+            errors: validationError,
         };
-        console.log(data);
+        console.error(data);
         return data;
     }
 }

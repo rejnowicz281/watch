@@ -3,7 +3,7 @@
 import useInterval from "@hooks/useInterval";
 import formatSeconds from "@utils/formatSeconds";
 import { useState } from "react";
-import SaveHistoryEntry from "../SaveNote";
+import SaveHistoryEntry from "../SaveHistoryEntry";
 
 export default function TimerInteractivity({ timerId, length, saveHistoryEntry }) {
     const [started, setStarted] = useState(false);
@@ -43,11 +43,14 @@ export default function TimerInteractivity({ timerId, length, saveHistoryEntry }
         setEnded(true);
     }
 
-    function handleSaveToHistory(note) {
-        saveHistoryEntry(timerId, note, secondsPassed);
-        setEnded(false);
-        setStarted(false);
-        setStopped(true);
+    async function handleSaveToHistory(formData) {
+        const response = await saveHistoryEntry(formData, timerId, secondsPassed);
+        if (response.success) {
+            setEnded(false);
+            setStarted(false);
+            setStopped(true);
+        }
+        return response;
     }
 
     return (
