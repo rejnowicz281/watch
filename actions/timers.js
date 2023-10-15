@@ -19,6 +19,40 @@ export async function getTimer(id) {
     return timer;
 }
 
+export async function createTimer(formData) {
+    "use server";
+
+    await connectToDB();
+
+    const name = formData.get("name");
+    const length = formData.get("length");
+
+    const timer = new Timer({
+        name: name || undefined,
+        length,
+    });
+
+    try {
+        await timer.save();
+
+        revalidatePath("/");
+
+        const data = {
+            action: "createTimer",
+            success: true,
+        };
+        console.log(data);
+        return data;
+    } catch (err) {
+        const data = {
+            action: "createTimer",
+            success: false,
+        };
+        console.log(data, err);
+        return data;
+    }
+}
+
 export async function saveHistoryEntry(timerId, note, seconds_passed) {
     "use server";
 
