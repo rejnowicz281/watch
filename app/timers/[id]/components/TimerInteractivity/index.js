@@ -3,7 +3,7 @@
 import useInterval from "@hooks/useInterval";
 import formatSeconds from "@utils/formatSeconds";
 import { useState } from "react";
-import SaveHistoryEntry from "../SaveHistoryEntry";
+import SaveHistoryEntry from "./SaveHistoryEntry";
 
 export default function TimerInteractivity({ timerId, length, saveHistoryEntry }) {
     const [started, setStarted] = useState(false);
