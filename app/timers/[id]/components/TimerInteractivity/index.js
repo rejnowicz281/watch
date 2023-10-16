@@ -4,8 +4,9 @@ import useInterval from "@hooks/useInterval";
 import formatSeconds from "@utils/formatSeconds";
 import { useState } from "react";
 import SaveHistoryEntry from "./SaveHistoryEntry";
+import TimerSettings from "./TimerSettings";
 
-export default function TimerInteractivity({ timerId, length, saveHistoryEntry }) {
+export default function TimerInteractivity({ timerId, length, saveHistoryEntry, updateTimerLength }) {
     const [started, setStarted] = useState(false);
     const [stopped, setStopped] = useState(true);
     const [seconds, setSeconds] = useState(length);
@@ -59,6 +60,16 @@ export default function TimerInteractivity({ timerId, length, saveHistoryEntry }
             <button onClick={stopped ? start : stop}>{!started ? "Start" : stopped ? "Resume" : "Stop"}</button>
             {started && <button onClick={end}>End</button>}
             {ended && <SaveHistoryEntry handleSave={handleSaveToHistory} secondsPassed={secondsPassed} />}
+            {!started && (
+                <TimerSettings
+                    timerId={timerId}
+                    length={length}
+                    action={(new_length) => {
+                        updateTimerLength(timerId, new_length);
+                        setEnded(false);
+                    }}
+                />
+            )}
         </div>
     );
 }

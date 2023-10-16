@@ -66,7 +66,11 @@ export async function updateTimerName(formData, id) {
 
     try {
         console.log(name);
-        const newTimer = await Timer.findByIdAndUpdate(id, { name }, { new: true });
+        const newTimer = await Timer.findByIdAndUpdate(
+            id,
+            { name: name || undefined },
+            { new: true, runValidators: true }
+        );
 
         revalidatePath(`/timers/${id}`);
 
@@ -81,6 +85,35 @@ export async function updateTimerName(formData, id) {
         const validationError = formatValidationError(err);
         const data = {
             action: "updateTimerName",
+            success: false,
+            errors: validationError,
+        };
+        console.error(data);
+        return data;
+    }
+}
+
+export async function updateTimerLength(id, new_length) {
+    "use server";
+
+    await connectToDB();
+
+    try {
+        const newTimer = await Timer.findByIdAndUpdate(id, { length: new_length }, { new: true, runValidators: true });
+
+        revalidatePath(`/timers/${id}`);
+
+        const data = {
+            action: "updateTimerLength",
+            success: true,
+            newTimer: JSON.stringify(newTimer),
+        };
+        console.log(data);
+        return data;
+    } catch (err) {
+        const validationError = formatValidationError(err);
+        const data = {
+            action: "updateTimerLength",
             success: false,
             errors: validationError,
         };
