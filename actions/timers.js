@@ -57,6 +57,38 @@ export async function createTimer(formData) {
     }
 }
 
+export async function updateTimerName(formData, id) {
+    "use server";
+
+    await connectToDB();
+
+    const name = formData.get("name");
+
+    try {
+        console.log(name);
+        const newTimer = await Timer.findByIdAndUpdate(id, { name }, { new: true });
+
+        revalidatePath(`/timers/${id}`);
+
+        const data = {
+            action: "updateTimerName",
+            success: true,
+            newTimer: JSON.stringify(newTimer),
+        };
+        console.log(data);
+        return data;
+    } catch (err) {
+        const validationError = formatValidationError(err);
+        const data = {
+            action: "updateTimerName",
+            success: false,
+            errors: validationError,
+        };
+        console.error(data);
+        return data;
+    }
+}
+
 export async function deleteTimer(timerId) {
     "use server";
 
