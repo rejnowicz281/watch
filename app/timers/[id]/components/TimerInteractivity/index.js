@@ -44,7 +44,7 @@ export default function TimerInteractivity({ timerId, length, saveHistoryEntry }
     }
 
     async function handleSaveToHistory(formData) {
-        const response = await saveHistoryEntry(formData, timerId, secondsPassed);
+        const response = await saveHistoryEntry(formData, timerId, length, secondsPassed);
         if (response.success) {
             setEnded(false);
             setStarted(false);

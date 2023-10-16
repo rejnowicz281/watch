@@ -73,7 +73,7 @@ export async function deleteTimer(timerId) {
     redirect("/");
 }
 
-export async function saveHistoryEntry(formData, timerId, seconds_passed) {
+export async function saveHistoryEntry(formData, timerId, timer_length, seconds_passed) {
     "use server";
 
     await connectToDB();
@@ -83,6 +83,7 @@ export async function saveHistoryEntry(formData, timerId, seconds_passed) {
     const entry = new HistoryEntry({
         note: note || undefined,
         seconds_passed,
+        timer_length,
     });
 
     try {
