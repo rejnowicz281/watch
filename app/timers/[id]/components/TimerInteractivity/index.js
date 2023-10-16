@@ -2,14 +2,14 @@
 
 import useInterval from "@hooks/useInterval";
 import formatSeconds from "@utils/formatSeconds";
-import { useState } from "react";
+import { experimental_useOptimistic as useOptimistic, useState } from "react";
 import SaveHistoryEntry from "./SaveHistoryEntry";
 import TimerSettings from "./TimerSettings";
 
 export default function TimerInteractivity({ timerId, length, saveHistoryEntry, updateTimerLength }) {
     const [started, setStarted] = useState(false);
     const [stopped, setStopped] = useState(true);
-    const [seconds, setSeconds] = useState(length);
+    const [seconds, setSeconds] = useOptimistic(length);
     const [secondsPassed, setSecondsPassed] = useState(0);
     const [ended, setEnded] = useState(false);
 
