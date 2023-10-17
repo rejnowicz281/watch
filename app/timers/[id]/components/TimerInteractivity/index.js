@@ -2,14 +2,15 @@
 
 import useInterval from "@hooks/useInterval";
 import formatSeconds from "@utils/formatSeconds";
-import { experimental_useOptimistic as useOptimistic, useState } from "react";
+import { useState } from "react";
 import SaveHistoryEntry from "./SaveHistoryEntry";
 import TimerSettings from "./TimerSettings";
 
 export default function TimerInteractivity({ timerId, length, saveHistoryEntry, updateTimerLength }) {
     const [started, setStarted] = useState(false);
     const [stopped, setStopped] = useState(true);
-    const [seconds, setSeconds] = useOptimistic(length);
+    const [timerLength, setTimerLength] = useState(length);
+    const [seconds, setSeconds] = useState(length);
     const [secondsPassed, setSecondsPassed] = useState(0);
     const [ended, setEnded] = useState(false);
 
@@ -37,15 +38,15 @@ export default function TimerInteractivity({ timerId, length, saveHistoryEntry, 
     }
 
     function end() {
-        setSecondsPassed(length - seconds);
-        setSeconds(length);
+        setSecondsPassed(timerLength - seconds);
+        setSeconds(timerLength);
         setStarted(false);
         setStopped(true);
         setEnded(true);
     }
 
     async function handleSaveToHistory(formData) {
-        const response = await saveHistoryEntry(formData, timerId, length, secondsPassed);
+        const response = await saveHistoryEntry(formData, timerId, seconds, secondsPassed);
         if (response.success) {
             setEnded(false);
             setStarted(false);
@@ -63,8 +64,12 @@ export default function TimerInteractivity({ timerId, length, saveHistoryEntry, 
             {!started && (
                 <TimerSettings
                     timerId={timerId}
-                    length={length}
+                    length={seconds}
                     action={(new_length) => {
+                        if (new_length > 0) {
+                            setSeconds(new_length);
+                            setTimerLength(new_length);
+                        }
                         updateTimerLength(timerId, new_length);
                         setEnded(false);
                     }}
