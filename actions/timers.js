@@ -101,8 +101,6 @@ export async function updateTimerLength(id, new_length) {
     try {
         const newTimer = await Timer.findByIdAndUpdate(id, { length: new_length }, { new: true, runValidators: true });
 
-        revalidatePath(`/timers/${id}`);
-
         const data = {
             action: "updateTimerLength",
             success: true,
