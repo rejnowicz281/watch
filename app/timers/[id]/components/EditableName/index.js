@@ -1,28 +1,40 @@
 "use client";
 
-import SubmitButton from "@components/SubmitButton";
 import { useState } from "react";
 
 export default function EditableName({ action, name, timerId }) {
+    const [nameInput, setNameInput] = useState(name);
+    const [nameDisplay, setNameDisplay] = useState(name);
     const [editing, setEditing] = useState(false);
 
-    async function handleAction(formData) {
-        const res = await action(formData, timerId);
-
-        if (res.success) setEditing(false);
+    function handleSubmit(e) {
+        e.preventDefault();
+        setEditing(false);
+        if (nameInput != "") {
+            setNameDisplay(nameInput);
+            action(nameInput, timerId);
+        } else {
+            setNameInput(nameDisplay);
+        }
     }
 
     if (editing)
         return (
-            <form action={handleAction}>
-                <input type="text" name="name" placeholder="Type in name here" defaultValue={name} />
-                <SubmitButton submitContent="Update Name" submittingContent="Updating..." />
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Type in name here"
+                    value={nameInput}
+                    onChange={(e) => setNameInput(e.target.value)}
+                />
+                <button>Update Name</button>
             </form>
         );
     else
         return (
             <button onClick={() => setEditing(true)}>
-                <h1>{name}</h1>
+                <h1>{nameDisplay}</h1>
             </button>
         );
 }

@@ -57,22 +57,17 @@ export async function createTimer(formData) {
     }
 }
 
-export async function updateTimerName(formData, id) {
+export async function updateTimerName(newName, id) {
     "use server";
 
     await connectToDB();
 
-    const name = formData.get("name");
-
     try {
-        console.log(name);
         const newTimer = await Timer.findByIdAndUpdate(
             id,
-            { name: name || undefined },
+            { name: newName || undefined },
             { new: true, runValidators: true }
         );
-
-        revalidatePath(`/timers/${id}`);
 
         const data = {
             action: "updateTimerName",
