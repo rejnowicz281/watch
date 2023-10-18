@@ -6,11 +6,11 @@ export const connectToDB = async () => {
     mongoose.set("strictQuery", true);
     if (isConnected) {
         console.log("MongoDB Connected");
-        return;
+        return mongoose.connection.client;
     }
 
     try {
-        await mongoose.connect(process.env.MONGODB_URI, {
+        mongoose.connect(process.env.MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -19,5 +19,7 @@ export const connectToDB = async () => {
         console.log("MongoDB Connected");
     } catch (err) {
         console.log(err);
+    } finally {
+        return mongoose.connection.client;
     }
 };
