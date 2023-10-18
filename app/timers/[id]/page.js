@@ -1,8 +1,23 @@
-import { deleteTimer, getTimer, saveHistoryEntry, updateTimerLength, updateTimerName } from "@actions/timers";
+import {
+    deleteTimer,
+    getTimer,
+    getTimers,
+    saveHistoryEntry,
+    updateTimerLength,
+    updateTimerName,
+} from "@actions/timers";
 import DeleteButton from "./components/DeleteButton";
 import EditableName from "./components/EditableName";
 import History from "./components/History";
 import TimerInteractivity from "./components/TimerInteractivity";
+
+export async function generateStaticParams() {
+    const timers = await getTimers();
+
+    return timers.map((timer) => ({
+        id: timer.id,
+    }));
+}
 
 export default async function TimerPage({ params: { id } }) {
     const timer = await getTimer(id);
