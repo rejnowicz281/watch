@@ -1,14 +1,20 @@
+"use server";
+
 import HistoryEntry from "@models/historyEntry";
 import Timer from "@models/timer";
+import authOptions from "@utils/authOptions";
 import { connectToDB } from "@utils/database";
 import formatValidationError from "@utils/formatValidationError";
+import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function getTimers() {
     await connectToDB();
 
-    const timers = await Timer.find();
+    const session = await getServerSession(authOptions);
+
+    const timers = await Timer.find({ user: session?.user?._id });
 
     return timers;
 }
@@ -16,22 +22,25 @@ export async function getTimers() {
 export async function getTimer(id) {
     await connectToDB();
 
-    const timer = await Timer.findById(id);
+    const session = await getServerSession(authOptions);
+
+    const timer = await Timer.findOne({ _id: id, user: session?.user?._id });
 
     return timer;
 }
 
 export async function createTimer(formData) {
-    "use server";
-
     await connectToDB();
 
     const name = formData.get("name");
     const length = formData.get("length");
 
+    const session = await getServerSession(authOptions);
+
     const timer = new Timer({
         name: name || undefined,
         length,
+        user: session?.user?._id,
     });
 
     try {
@@ -58,13 +67,13 @@ export async function createTimer(formData) {
 }
 
 export async function updateTimerName(newName, id) {
-    "use server";
-
     await connectToDB();
 
+    const session = await getServerSession(authOptions);
+
     try {
-        const newTimer = await Timer.findByIdAndUpdate(
-            id,
+        const newTimer = await Timer.findOneAndUpdate(
+            { _id: id, user: session?.user?._id },
             { name: newName || undefined },
             { new: true, runValidators: true }
         );
@@ -89,12 +98,16 @@ export async function updateTimerName(newName, id) {
 }
 
 export async function updateTimerLength(id, new_length) {
-    "use server";
-
     await connectToDB();
 
+    const session = await getServerSession(authOptions);
+
     try {
-        const newTimer = await Timer.findByIdAndUpdate(id, { length: new_length }, { new: true, runValidators: true });
+        const newTimer = await Timer.findOneAndUpdate(
+            { _id: id, user: session?.user?._id },
+            { length: new_length },
+            { new: true, runValidators: true }
+        );
 
         const data = {
             action: "updateTimerLength",
@@ -116,11 +129,11 @@ export async function updateTimerLength(id, new_length) {
 }
 
 export async function deleteTimer(timerId) {
-    "use server";
-
     await connectToDB();
 
-    await Timer.findByIdAndDelete(timerId);
+    const session = await getServerSession(authOptions);
+
+    await Timer.deleteOne({ _id: timerId, user: session?.user?._id });
 
     const data = {
         action: "deleteTimer",
@@ -132,8 +145,6 @@ export async function deleteTimer(timerId) {
 }
 
 export async function saveHistoryEntry(formData, timerId, timer_length, seconds_passed) {
-    "use server";
-
     await connectToDB();
 
     const note = formData.get("note");
@@ -144,11 +155,13 @@ export async function saveHistoryEntry(formData, timerId, timer_length, seconds_
         timer_length,
     });
 
+    const session = await getServerSession(authOptions);
+
     try {
         await entry.validate();
 
-        await Timer.findByIdAndUpdate(
-            timerId,
+        await Timer.findOneAndUpdate(
+            { _id: timerId, user: session?.user?._id },
             {
                 $push: { history: entry },
             },
@@ -177,12 +190,12 @@ export async function saveHistoryEntry(formData, timerId, timer_length, seconds_
 }
 
 export async function deleteHistoryEntry(timerId, entryId) {
-    "use server";
-
     await connectToDB();
 
-    await Timer.findByIdAndUpdate(
-        timerId,
+    const session = await getServerSession(authOptions);
+
+    await Timer.findOneAndUpdate(
+        { _id: timerId, user: session?.user?._id },
         {
             $pull: { history: { _id: entryId } },
         },
