@@ -66,7 +66,7 @@ export async function createTimer(formData) {
     }
 }
 
-export async function updateTimerName(newName, id) {
+export async function updateTimerName(id, name) {
     await connectToDB();
 
     const session = await getServerSession(authOptions);
@@ -74,7 +74,7 @@ export async function updateTimerName(newName, id) {
     try {
         const newTimer = await Timer.findOneAndUpdate(
             { _id: id, user: session?.user?._id },
-            { name: newName || undefined },
+            { name: name || undefined },
             { new: true, runValidators: true }
         );
 
@@ -97,7 +97,7 @@ export async function updateTimerName(newName, id) {
     }
 }
 
-export async function updateTimerLength(id, new_length) {
+export async function updateTimerLength(id, length) {
     await connectToDB();
 
     const session = await getServerSession(authOptions);
@@ -105,7 +105,7 @@ export async function updateTimerLength(id, new_length) {
     try {
         const newTimer = await Timer.findOneAndUpdate(
             { _id: id, user: session?.user?._id },
-            { length: new_length },
+            { length },
             { new: true, runValidators: true }
         );
 
@@ -128,12 +128,12 @@ export async function updateTimerLength(id, new_length) {
     }
 }
 
-export async function deleteTimer(timerId) {
+export async function deleteTimer(id) {
     await connectToDB();
 
     const session = await getServerSession(authOptions);
 
-    await Timer.deleteOne({ _id: timerId, user: session?.user?._id });
+    await Timer.deleteOne({ _id: id, user: session?.user?._id });
 
     const data = {
         action: "deleteTimer",
@@ -144,10 +144,11 @@ export async function deleteTimer(timerId) {
     redirect("/");
 }
 
-export async function saveHistoryEntry(formData, timerId, timer_length, seconds_passed) {
+export async function saveHistoryEntry(formData, timer_length, seconds_passed) {
     await connectToDB();
 
     const note = formData.get("note");
+    const timer = formData.get("timer");
 
     const entry = new HistoryEntry({
         note: note || undefined,
@@ -161,14 +162,14 @@ export async function saveHistoryEntry(formData, timerId, timer_length, seconds_
         await entry.validate();
 
         await Timer.findOneAndUpdate(
-            { _id: timerId, user: session?.user?._id },
+            { _id: timer, user: session?.user?._id },
             {
                 $push: { history: entry },
             },
             { new: true }
         );
 
-        revalidatePath(`/timers/${timerId}`);
+        revalidatePath(`/timers/${timer}`);
 
         const data = {
             action: "saveHistoryEntry",

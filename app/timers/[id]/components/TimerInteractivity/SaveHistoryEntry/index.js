@@ -11,7 +11,7 @@ export default function SaveHistoryEntry({ onSaveSuccess, id, length, secondsPas
     async function handleAction(formData) {
         setErrors([]);
 
-        const response = await saveHistoryEntry(formData, id, length, secondsPassed);
+        const response = await saveHistoryEntry(formData, length, secondsPassed);
 
         if (!response.success) setErrors(response.errors);
         else {
@@ -22,6 +22,7 @@ export default function SaveHistoryEntry({ onSaveSuccess, id, length, secondsPas
 
     return (
         <form action={handleAction} ref={formRef}>
+            <input type="hidden" name="timer" value={id} />
             <input type="text" name="note" />
             {errors?.seconds_passed?.map((error, idx) => (
                 <li key={idx}>{error}</li>

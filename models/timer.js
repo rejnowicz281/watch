@@ -11,6 +11,7 @@ const timerSchema = new Schema(
         name: {
             type: String,
             default: "Untitled Timer",
+            required: true,
         },
         history: [HistoryEntry.schema],
         user: {

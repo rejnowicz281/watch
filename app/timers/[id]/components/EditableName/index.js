@@ -13,7 +13,7 @@ export default function EditableName({ name, id }) {
         setEditing(false);
         if (nameInput != "") {
             setNameDisplay(nameInput);
-            updateTimerName(nameInput, id);
+            updateTimerName(id, nameInput);
         } else {
             setNameInput(nameDisplay);
         }
