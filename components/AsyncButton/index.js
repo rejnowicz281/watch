@@ -17,7 +17,7 @@ export default function AsyncButton({ className, mainAction, content, loadingCon
 
     return (
         <button className={className} type={type} onClick={handleMainAction} disabled={loading}>
-            {loading ? loadingContent : content}
+            {loadingContent ? (loading ? loadingContent : content) : content}
         </button>
     );
 }

@@ -7,11 +7,12 @@ export default async function Home() {
 
     return (
         <>
+            <Link href="/api/auth/signout">Sign Out</Link>
             <NewTimer createTimer={createTimer} />
             <div>
                 {timers.map((timer) => (
-                    <li>
-                        <Link href={`/timers/${timer.id}`} key={timer.id}>
+                    <li key={timer.id}>
+                        <Link href={`/timers/${timer.id}`}>
                             {timer.name} | {timer.length}
                         </Link>
                     </li>

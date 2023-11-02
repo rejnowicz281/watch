@@ -1,0 +1,98 @@
+:root {
+    --line-height-headers: 1.1;
+    --line-height-body: 1.5;
+
+    --main-font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+
+    --font-size-xs: 8px;
+    --font-size-s: 10px;
+    --font-size-m: 15px;
+    --font-size-l: 20px;
+    --font-size-xl: 30px;
+    --font-size-xxl: 40px;
+    --font-size-xxxl: 60px;
+    --font-size-xxxxl: 70px;
+    --font-size-xxxxxl: 100px;
+
+    --space-xxxs: 4px;
+    --space-xxs: 6px;
+    --space-xs: 8px;
+    --space-s: 12px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 32px;
+    --space-xxl: 40px;
+    --space-xxxl: 48px;
+    --space-xxxxl: 64px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    line-height: var(--line-height-body);
+    font-size: var(--font-size-m);
+    font-family: var(--main-font-family);
+}
+
+img,
+picture,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: var(--line-height-headers);
+}
+
+h1 {
+    font-size: var(--font-size-xxxxl);
+}
+
+h2 {
+    font-size: var(--font-size-xxxl);
+}
+
+h3 {
+    font-size: var(--font-size-xxl);
+}
+
+h4 {
+    font-size: var(--font-size-xl);
+}
+
+h5 {
+    font-size: var(--font-size-l);
+}
+
+h6 {
+    font-size: var(--font-size-m);
+}

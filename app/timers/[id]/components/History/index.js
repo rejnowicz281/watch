@@ -2,7 +2,7 @@ import { deleteHistoryEntry } from "@/actions/timers";
 import formatSeconds from "@/utils/formatSeconds";
 import DeleteButton from "./DeleteButton";
 
-export default function History({ history, timerId }) {
+export default function History({ history, id }) {
     return (
         <>
             <h2>History</h2>
@@ -14,7 +14,7 @@ export default function History({ history, timerId }) {
                         </h3>
                         <p>{entry.note}</p>
                         <p>({entry.createdAt.toString()})</p>
-                        <DeleteButton action={deleteHistoryEntry} timerId={timerId} entryId={entry.id} />
+                        <DeleteButton action={deleteHistoryEntry} id={id} entryId={entry.id} />
                     </li>
                 ))}
             </ul>

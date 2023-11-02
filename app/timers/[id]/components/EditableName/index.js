@@ -1,8 +1,9 @@
 "use client";
 
+import { updateTimerName } from "@/actions/timers";
 import { useState } from "react";
 
-export default function EditableName({ action, name, timerId }) {
+export default function EditableName({ name, id }) {
     const [nameInput, setNameInput] = useState(name);
     const [nameDisplay, setNameDisplay] = useState(name);
     const [editing, setEditing] = useState(false);
@@ -12,7 +13,7 @@ export default function EditableName({ action, name, timerId }) {
         setEditing(false);
         if (nameInput != "") {
             setNameDisplay(nameInput);
-            action(nameInput, timerId);
+            updateTimerName(nameInput, id);
         } else {
             setNameInput(nameDisplay);
         }

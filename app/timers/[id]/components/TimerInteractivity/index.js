@@ -1,80 +1,73 @@
 "use client";
 
 import useInterval from "@/hooks/useInterval";
+import { useModalStore } from "@/store";
 import formatSeconds from "@/utils/formatSeconds";
 import { useState } from "react";
+import { CiStop1 } from "react-icons/ci";
+import { FiPlay } from "react-icons/fi";
+import { PiPauseLight } from "react-icons/pi";
+import { RxResume } from "react-icons/rx";
 import SaveHistoryEntry from "./SaveHistoryEntry";
-import TimerSettings from "./TimerSettings";
+import css from "./index.module.css";
 
-export default function TimerInteractivity({ timerId, length, saveHistoryEntry, updateTimerLength }) {
+export default function TimerInteractivity({ id, length }) {
+    const { setModalContent, closeModal } = useModalStore();
+
     const [started, setStarted] = useState(false);
-    const [stopped, setStopped] = useState(true);
-    const [timerLength, setTimerLength] = useState(length);
+    const [paused, setPaused] = useState(true);
     const [seconds, setSeconds] = useState(length);
-    const [secondsPassed, setSecondsPassed] = useState(0);
-    const [ended, setEnded] = useState(false);
 
-    useInterval(countDown, stopped ? null : 1000);
+    useInterval(countDown, paused ? null : 1000);
 
     function start() {
-        if (!started) {
-            setStarted(true);
-            setEnded(false);
-        }
+        if (!started) setStarted(true);
 
-        setStopped(false);
+        setPaused(false);
     }
 
     function countDown() {
-        if (seconds <= 0) {
-            end();
-        } else {
-            setSeconds(seconds - 1);
-        }
+        if (seconds <= 0) end();
+        else setSeconds(seconds - 1);
     }
 
     function stop() {
-        setStopped(true);
+        setPaused(true);
     }
 
     function end() {
-        setSecondsPassed(timerLength - seconds);
-        setSeconds(timerLength);
+        setModalContent(
+            <SaveHistoryEntry
+                id={id}
+                onSaveSuccess={handleSaveSuccess}
+                secondsPassed={length - seconds}
+                length={length}
+            />
+        );
+        setSeconds(length);
         setStarted(false);
-        setStopped(true);
-        setEnded(true);
+        setPaused(true);
     }
 
-    async function handleSaveToHistory(formData) {
-        const response = await saveHistoryEntry(formData, timerId, seconds, secondsPassed);
-        if (response.success) {
-            setEnded(false);
-            setStarted(false);
-            setStopped(true);
-        }
-        return response;
+    function handleSaveSuccess() {
+        setStarted(false);
+        setPaused(true);
+        closeModal();
     }
 
     return (
         <div>
-            <p>{formatSeconds(seconds)}</p>
-            <button onClick={stopped ? start : stop}>{!started ? "Start" : stopped ? "Resume" : "Stop"}</button>
-            {started && <button onClick={end}>End</button>}
-            {ended && <SaveHistoryEntry handleSave={handleSaveToHistory} secondsPassed={secondsPassed} />}
-            {!started && (
-                <TimerSettings
-                    timerId={timerId}
-                    length={seconds}
-                    action={(new_length) => {
-                        if (new_length > 0) {
-                            setSeconds(new_length);
-                            setTimerLength(new_length);
-                        }
-                        updateTimerLength(timerId, new_length);
-                        setEnded(false);
-                    }}
-                />
-            )}
+            <h2 className={css.seconds}>{formatSeconds(seconds)}</h2>
+            <div className={css.buttons}>
+                <button className={css.button} onClick={paused ? start : stop}>
+                    {!started ? <FiPlay /> : paused ? <RxResume /> : <PiPauseLight />}
+                </button>
+                {started && (
+                    <button className={`${css.button} ${css["stop-button"]}`} onClick={end}>
+                        <CiStop1 />
+                    </button>
+                )}
+            </div>
         </div>
     );
 }
