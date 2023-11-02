@@ -1,10 +1,16 @@
 "use client";
 
-import { deleteTimer } from "@/actions/timers";
-import AsyncButton from "@/components/AsyncButton";
+import { useModalStore } from "@/store";
 import { BsTrash } from "react-icons/bs";
+import Confirm from "./Confirm";
 import css from "./index.module.css";
 
 export default function DeleteButton({ id }) {
-    return <AsyncButton className={css.button} mainAction={() => deleteTimer(id)} content={<BsTrash />} />;
+    const { setModalContent } = useModalStore();
+
+    return (
+        <button onClick={() => setModalContent(<Confirm id={id} />)} className={css.button}>
+            <BsTrash />
+        </button>
+    );
 }
