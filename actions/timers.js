@@ -78,6 +78,8 @@ export async function updateTimerName(id, name) {
             { new: true, runValidators: true }
         );
 
+        revalidatePath(`/timers/${id}`);
+
         const data = {
             action: "updateTimerName",
             success: true,
@@ -108,6 +110,8 @@ export async function updateTimerLength(id, length) {
             { length },
             { new: true, runValidators: true }
         );
+
+        revalidatePath(`/timers/${id}`);
 
         const data = {
             action: "updateTimerLength",
