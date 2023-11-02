@@ -57,7 +57,7 @@ export default function TimerInteractivity({ id, length }) {
 
     return (
         <div>
-            <h2 className={css.seconds}>{formatSeconds(seconds)}</h2>
+            <h2 className={css.seconds}>{formatSeconds(started ? seconds : length)}</h2>
             <div className={css.buttons}>
                 <button className={css.button} onClick={paused ? start : stop}>
                     {!started ? <FiPlay /> : paused ? <RxResume /> : <PiPauseLight />}
