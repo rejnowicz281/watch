@@ -2,7 +2,9 @@
 
 import { saveHistoryEntry } from "@/actions/timers";
 import SubmitButton from "@/components/SubmitButton";
+import formatSeconds from "@/utils/formatSeconds";
 import { useRef, useState } from "react";
+import css from "./index.module.css";
 
 export default function SaveHistoryEntry({ onSaveSuccess, id, length, secondsPassed }) {
     const formRef = useRef(null);
@@ -21,16 +23,20 @@ export default function SaveHistoryEntry({ onSaveSuccess, id, length, secondsPas
     }
 
     return (
-        <form action={handleAction} ref={formRef}>
-            <input type="hidden" name="timer" value={id} />
-            <input type="text" name="note" />
-            {errors?.seconds_passed?.map((error, idx) => (
-                <li key={idx}>{error}</li>
-            ))}
-            <SubmitButton
-                submitContent={`Save To History (${secondsPassed} / ${length})`}
-                submittingContent="Saving..."
-            />
-        </form>
+        <>
+            <p className={css.heading}>Save to history</p>
+            <form className={css.form} action={handleAction} ref={formRef}>
+                <input type="hidden" name="timer" value={id} />
+                <input className={css.input} type="text" name="note" placeholder="Leave a note (optional)" />
+                {errors?.seconds_passed?.map((error, idx) => (
+                    <li key={idx}>{error}</li>
+                ))}
+                <SubmitButton
+                    className={css.button}
+                    submitContent={`Save To History (${formatSeconds(secondsPassed)} / ${formatSeconds(length)})`}
+                    submittingContent="Saving..."
+                />
+            </form>
+        </>
     );
 }
