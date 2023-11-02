@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "turbo": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -11,9 +12,9 @@
   "dependencies": {
     "@auth/mongodb-adapter": "^2.0.2",
     "mongoose": "^6.12.1",
-    "next": "^13.5.5",
-    "next-auth": "^4.23.2",
-    "react": "^18",
-    "react-dom": "^18"
+    "next": "^14.0.1",
+    "next-auth": "^4.24.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

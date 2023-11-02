@@ -1,6 +1,6 @@
 "use client";
 
-import AsyncButton from "@components/AsyncButton";
+import AsyncButton from "@/components/AsyncButton";
 
 export default function DeleteButton({ action, timerId, entryId }) {
     return (

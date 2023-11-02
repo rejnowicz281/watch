@@ -1,5 +1,5 @@
-import { deleteHistoryEntry } from "@actions/timers";
-import formatSeconds from "@utils/formatSeconds";
+import { deleteHistoryEntry } from "@/actions/timers";
+import formatSeconds from "@/utils/formatSeconds";
 import DeleteButton from "./DeleteButton";
 
 export default function History({ history, timerId }) {

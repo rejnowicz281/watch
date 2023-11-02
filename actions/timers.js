@@ -1,10 +1,10 @@
 "use server";
 
-import HistoryEntry from "@models/historyEntry";
-import Timer from "@models/timer";
-import authOptions from "@utils/authOptions";
-import { connectToDB } from "@utils/database";
-import formatValidationError from "@utils/formatValidationError";
+import HistoryEntry from "@/models/historyEntry";
+import Timer from "@/models/timer";
+import authOptions from "@/utils/authOptions";
+import { connectToDB } from "@/utils/database";
+import formatValidationError from "@/utils/formatValidationError";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";

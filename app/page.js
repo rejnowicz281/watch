@@ -1,4 +1,4 @@
-import { createTimer, getTimers } from "@actions/timers";
+import { createTimer, getTimers } from "@/actions/timers";
 import Link from "next/link";
 import NewTimer from "./components/NewTimer";
 

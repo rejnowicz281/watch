@@ -1,7 +1,7 @@
 "use client";
 
-import useInterval from "@hooks/useInterval";
-import formatSeconds from "@utils/formatSeconds";
+import useInterval from "@/hooks/useInterval";
+import formatSeconds from "@/utils/formatSeconds";
 import { useState } from "react";
 import SaveHistoryEntry from "./SaveHistoryEntry";
 import TimerSettings from "./TimerSettings";

@@ -1,6 +1,6 @@
 "use client";
 
-import SubmitButton from "@components/SubmitButton";
+import SubmitButton from "@/components/SubmitButton";
 import { useRef, useState } from "react";
 
 export default function NewTimer({ createTimer }) {
