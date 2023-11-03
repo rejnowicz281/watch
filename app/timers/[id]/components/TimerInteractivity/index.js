@@ -1,9 +1,9 @@
 "use client";
 
 import useInterval from "@/hooks/useInterval";
-import { useModalStore } from "@/store";
+import { useModalStore, useTimerStore } from "@/store";
 import formatSeconds from "@/utils/formatSeconds";
-import { useState } from "react";
+import { useEffect } from "react";
 import { CiStop1 } from "react-icons/ci";
 import { FiPlay } from "react-icons/fi";
 import { PiPauseLight } from "react-icons/pi";
@@ -13,29 +13,22 @@ import css from "./index.module.css";
 
 export default function TimerInteractivity({ id, length }) {
     const { setModalContent, closeModal } = useModalStore();
+    const { started, start, end, pause, paused, seconds, setSeconds } = useTimerStore();
 
-    const [started, setStarted] = useState(false);
-    const [paused, setPaused] = useState(true);
-    const [seconds, setSeconds] = useState(length);
+    useEffect(() => {
+        setSeconds(length);
+
+        return () => end();
+    }, []);
 
     useInterval(countDown, paused ? null : 1000);
-
-    function start() {
-        if (!started) setStarted(true);
-
-        setPaused(false);
-    }
 
     function countDown() {
         if (seconds <= 0) end();
         else setSeconds(seconds - 1);
     }
 
-    function stop() {
-        setPaused(true);
-    }
-
-    function end() {
+    function handleEnd() {
         setModalContent(
             <SaveHistoryEntry
                 id={id}
@@ -45,13 +38,11 @@ export default function TimerInteractivity({ id, length }) {
             />
         );
         setSeconds(length);
-        setStarted(false);
-        setPaused(true);
+        end();
     }
 
     function handleSaveSuccess() {
-        setStarted(false);
-        setPaused(true);
+        end();
         closeModal();
     }
 
@@ -59,11 +50,11 @@ export default function TimerInteractivity({ id, length }) {
         <div>
             <h2 className={css.seconds}>{formatSeconds(started ? seconds : length)}</h2>
             <div className={css.buttons}>
-                <button className={css.button} onClick={paused ? start : stop}>
+                <button className={css.button} onClick={paused ? start : pause}>
                     {!started ? <FiPlay /> : paused ? <RxResume /> : <PiPauseLight />}
                 </button>
                 {started && (
-                    <button className={`${css.button} ${css["stop-button"]}`} onClick={end}>
+                    <button className={`${css.button} ${css["stop-button"]}`} onClick={handleEnd}>
                         <CiStop1 />
                     </button>
                 )}
