@@ -148,8 +148,22 @@ export async function deleteTimer(id) {
     redirect("/");
 }
 
+export async function getTimerHistory(id) {
+    await connectToDB();
+
+    const session = await getServerSession(authOptions);
+
+    const history = await HistoryEntry.find({ timer: id, user: session?.user?._id }).sort({
+        createdAt: -1,
+    });
+
+    return history;
+}
+
 export async function saveHistoryEntry(formData, timer_length, seconds_passed) {
     await connectToDB();
+
+    const session = await getServerSession(authOptions);
 
     const note = formData.get("note");
     const timer = formData.get("timer");
@@ -158,22 +172,14 @@ export async function saveHistoryEntry(formData, timer_length, seconds_passed) {
         note: note || undefined,
         seconds_passed,
         timer_length,
+        timer,
+        user: session?.user?._id,
     });
 
-    const session = await getServerSession(authOptions);
-
     try {
-        await entry.validate();
+        await entry.save();
 
-        await Timer.findOneAndUpdate(
-            { _id: timer, user: session?.user?._id },
-            {
-                $push: { history: entry },
-            },
-            { new: true }
-        );
-
-        revalidatePath(`/timers/${timer}`);
+        revalidatePath(`/timers/${timer}/history`);
 
         const data = {
             action: "saveHistoryEntry",
@@ -199,15 +205,9 @@ export async function deleteHistoryEntry(timerId, entryId) {
 
     const session = await getServerSession(authOptions);
 
-    await Timer.findOneAndUpdate(
-        { _id: timerId, user: session?.user?._id },
-        {
-            $pull: { history: { _id: entryId } },
-        },
-        { new: true }
-    );
+    await HistoryEntry.deleteOne({ _id: entryId, user: session?.user?._id, timer: timerId });
 
-    revalidatePath(`/timers/${timerId}`);
+    revalidatePath(`/timers/${timerId}/history`);
 
     const data = {
         action: "deleteHistoryEntry",

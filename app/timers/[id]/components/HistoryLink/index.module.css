@@ -1,0 +1,13 @@
+.link {
+    font-size: var(--font-size-xl);
+    background-color: inherit;
+    color: black;
+    display: block;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.link:hover {
+    color: rgb(189, 189, 189);
+}

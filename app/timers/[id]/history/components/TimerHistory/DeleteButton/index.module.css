@@ -1,0 +1,11 @@
+.button {
+    background-color: inherit;
+    border: none;
+    font-weight: bold;
+    color: red;
+    transition: 0.1s;
+}
+
+.button:hover {
+    color: rgb(255, 156, 156);
+}

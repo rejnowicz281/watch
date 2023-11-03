@@ -1,7 +1,7 @@
 import { getTimer } from "@/actions/timers";
 import DeleteButton from "./components/DeleteButton";
 import GoBack from "./components/GoBack";
-import History from "./components/History";
+import HistoryLink from "./components/HistoryLink";
 import SettingsButton from "./components/SettingsButton";
 import TimerInteractivity from "./components/TimerInteractivity";
 import css from "./page.module.css";
@@ -16,6 +16,7 @@ export default async function TimerPage({ params: { id } }) {
                     <GoBack />
                 </div>
                 <div className={css.topright}>
+                    <HistoryLink id={id} />
                     <DeleteButton id={id} />
                     <SettingsButton name={timer.name} id={id} length={timer.length} />
                 </div>
@@ -24,7 +25,6 @@ export default async function TimerPage({ params: { id } }) {
                 <h1 className={css.name}>{timer.name}</h1>
                 <TimerInteractivity id={id} length={timer.length} />
             </div>
-            {timer.history.length > 0 && <History history={timer.history} id={timer.id} />}
         </div>
     );
 }

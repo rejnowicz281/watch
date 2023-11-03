@@ -1,5 +1,4 @@
 const { Schema, models, model } = require("mongoose");
-const HistoryEntry = require("./historyEntry");
 
 const timerSchema = new Schema(
     {
@@ -13,7 +12,6 @@ const timerSchema = new Schema(
             default: "Untitled Timer",
             required: true,
         },
-        history: [HistoryEntry.schema],
         user: {
             type: Schema.Types.ObjectId,
             required: true,
