@@ -14,7 +14,9 @@ export async function getTimers() {
 
     const session = await getServerSession(authOptions);
 
-    const timers = await Timer.find({ user: session?.user?._id });
+    const timers = await Timer.find({ user: session?.user?._id }).sort({
+        createdAt: -1,
+    });
 
     return timers;
 }
