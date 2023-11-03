@@ -1,0 +1,29 @@
+.container {
+    margin-bottom: var(--space-m);
+}
+
+.heading {
+    text-align: center;
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-m);
+}
+
+.form {
+    margin-bottom: var(--space-xxs);
+}
+
+.input {
+    padding: var(--space-xs);
+    width: 100%;
+}
+
+.submit {
+    padding: var(--space-xs);
+    font-weight: bold;
+    width: 100%;
+}
+
+.error {
+    color: rgb(255, 0, 0);
+    font-weight: bold;
+}

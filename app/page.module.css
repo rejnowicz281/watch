@@ -1,0 +1,37 @@
+.container {
+    padding: var(--space-xxl);
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-xxl);
+}
+
+.heading {
+    margin-bottom: var(--space-m);
+    padding-bottom: var(--space-m);
+    border-bottom: var(--border-grey);
+}
+
+.timer-link {
+    display: block;
+    font-size: var(--font-size-xxl);
+    margin-bottom: var(--space-l);
+    text-decoration: none;
+    color: rgb(46, 46, 46);
+    transition: 0.1s;
+}
+
+.timer-link:hover {
+    color: rgb(141, 141, 141);
+}
+
+.timer-name {
+    font-size: var(--font-size-xxl);
+}
+
+.timer-length {
+    font-size: var(--font-size-xl);
+}

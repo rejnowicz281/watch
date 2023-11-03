@@ -1,0 +1,11 @@
+.button {
+    font-size: var(--font-size-xxxl);
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.button:hover {
+    color: rgb(189, 189, 189);
+}

@@ -1,23 +1,28 @@
-import { createTimer, getTimers } from "@/actions/timers";
+import { getTimers } from "@/actions/timers";
+import formatSeconds from "@/utils/formatSeconds";
 import Link from "next/link";
-import NewTimer from "./components/NewTimer";
+import NewTimerButton from "./components/NewTimerButton";
+import Signout from "./components/Signout";
+import css from "./page.module.css";
 
 export default async function Home() {
     const timers = await getTimers();
 
     return (
-        <>
-            <Link href="/api/auth/signout">Sign Out</Link>
-            <NewTimer createTimer={createTimer} />
-            <div>
+        <div className={css.container}>
+            <div className={css.top}>
+                <NewTimerButton />
+                <Signout />
+            </div>
+            <div className={css.main}>
+                <h1 className={css.heading}>Timers</h1>
                 {timers.map((timer) => (
-                    <li key={timer.id}>
-                        <Link href={`/timers/${timer.id}`}>
-                            {timer.name} | {timer.length}
-                        </Link>
-                    </li>
+                    <Link key={timer.id} className={css["timer-link"]} href={`/timers/${timer.id}`}>
+                        <h2 className={css["timer-name"]}>{timer.name}</h2>
+                        <div className={css["timer-length"]}>{formatSeconds(timer.length)}</div>
+                    </Link>
                 ))}
             </div>
-        </>
+        </div>
     );
 }
