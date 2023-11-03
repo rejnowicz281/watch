@@ -24,7 +24,7 @@ export default function TimerInteractivity({ id, length }) {
     useInterval(countDown, paused ? null : 1000);
 
     function countDown() {
-        if (seconds <= 0) end();
+        if (seconds <= 0) handleEnd();
         else setSeconds(seconds - 1);
     }
 
