@@ -2,7 +2,7 @@
 
 import { useModalStore } from "@/store";
 import { FiSettings } from "react-icons/fi";
-import TimerSettings from "../TimerSettings";
+import TimerSettings from "./TimerSettings";
 import css from "./index.module.css";
 
 export default function SettingsButton({ id, length, name }) {

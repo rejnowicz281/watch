@@ -1,9 +1,9 @@
+import ModalWrapper from "./components/ModalWrapper";
 import "./globals.css";
-import ModalWrapper from "./timers/[id]/components/ModalWrapper";
 
 export const metadata = {
     title: "Watch",
-    description: "Time tracker app to boost your productivity",
+    description: "Time Tracking Made Simple",
 };
 
 export default function RootLayout({ children }) {
