@@ -1,6 +1,6 @@
 # watch
 
-A time-tracker app built with Rails.
+A time-tracker app built with NextJS.
 
 ## Features
 
