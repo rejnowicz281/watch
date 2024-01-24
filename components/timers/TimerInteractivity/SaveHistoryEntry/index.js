@@ -2,7 +2,7 @@
 
 import { saveHistoryEntry } from "@/actions/timers";
 import SubmitButton from "@/components/general/SubmitButton";
-import formatSeconds from "@/utils/formatSeconds";
+import formatSeconds from "@/utils/general/formatSeconds";
 import { useRef, useState } from "react";
 import css from "./index.module.css";
 

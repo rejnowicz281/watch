@@ -1,5 +1,5 @@
-import { formatDate } from "@/utils/formatDate";
-import formatSeconds from "@/utils/formatSeconds";
+import { formatDate } from "@/utils/general/formatDate";
+import formatSeconds from "@/utils/general/formatSeconds";
 import DeleteButton from "./DeleteButton";
 import css from "./index.module.css";
 

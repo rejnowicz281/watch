@@ -2,12 +2,13 @@
 
 import HistoryEntry from "@/models/historyEntry";
 import Timer from "@/models/timer";
-import authOptions from "@/utils/authOptions";
-import { connectToDB } from "@/utils/database";
-import formatValidationError from "@/utils/formatValidationError";
+import actionError from "@/utils/actions/actionError";
+import actionSuccess from "@/utils/actions/actionSuccess";
+import formatValidationError from "@/utils/actions/formatValidationError";
+import authOptions from "@/utils/general/authOptions";
+import { connectToDB } from "@/utils/general/database";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function getTimers() {
     await connectToDB();
@@ -34,6 +35,8 @@ export async function getTimer(id) {
 export async function createTimer(formData) {
     await connectToDB();
 
+    const actionName = "createTimer";
+
     const name = formData.get("name");
     const length = formData.get("length");
 
@@ -50,26 +53,16 @@ export async function createTimer(formData) {
 
         revalidatePath("/");
 
-        const data = {
-            action: "createTimer",
-            success: true,
-        };
-        console.log(data);
-        return data;
+        return actionSuccess(actionName);
     } catch (err) {
-        const validationError = formatValidationError(err);
-        const data = {
-            action: "createTimer",
-            success: false,
-            errors: validationError,
-        };
-        console.error(data);
-        return data;
+        return actionError(actionName, { errors: formatValidationError(err) });
     }
 }
 
 export async function updateTimerName(formData) {
     await connectToDB();
+
+    const actionName = "updateTimerName";
 
     const session = await getServerSession(authOptions);
 
@@ -85,27 +78,16 @@ export async function updateTimerName(formData) {
 
         revalidatePath(`/timers/${id}`);
 
-        const data = {
-            action: "updateTimerName",
-            success: true,
-            newTimer: JSON.stringify(newTimer),
-        };
-        console.log(data);
-        return data;
+        return actionSuccess(actionName, { newTimer: JSON.stringify(newTimer) });
     } catch (err) {
-        const validationError = formatValidationError(err);
-        const data = {
-            action: "updateTimerName",
-            success: false,
-            errors: validationError,
-        };
-        console.error(data);
-        return data;
+        return actionError(actionName, { errors: formatValidationError(err) });
     }
 }
 
 export async function updateTimerLength(formData) {
     await connectToDB();
+
+    const actionName = "updateTimerLength";
 
     const session = await getServerSession(authOptions);
 
@@ -121,27 +103,16 @@ export async function updateTimerLength(formData) {
 
         revalidatePath(`/timers/${id}`);
 
-        const data = {
-            action: "updateTimerLength",
-            success: true,
-            newTimer: JSON.stringify(newTimer),
-        };
-        console.log(data);
-        return data;
+        return actionSuccess(actionName, { newTimer: JSON.stringify(newTimer) });
     } catch (err) {
-        const validationError = formatValidationError(err);
-        const data = {
-            action: "updateTimerLength",
-            success: false,
-            errors: validationError,
-        };
-        console.error(data);
-        return data;
+        return actionError(actionName, { errors: formatValidationError(err) });
     }
 }
 
 export async function deleteTimer(formData) {
     await connectToDB();
+
+    const actionName = "deleteTimer";
 
     const session = await getServerSession(authOptions);
 
@@ -149,13 +120,7 @@ export async function deleteTimer(formData) {
 
     await Timer.deleteOne({ _id: id, user: session?.user?._id });
 
-    const data = {
-        action: "deleteTimer",
-        success: true,
-    };
-    console.log(data);
-
-    redirect("/");
+    return actionSuccess(actionName, {}, "/");
 }
 
 export async function getTimerHistory(id) {
@@ -172,6 +137,8 @@ export async function getTimerHistory(id) {
 
 export async function saveHistoryEntry(formData, timer_length, seconds_passed) {
     await connectToDB();
+
+    const actionName = "saveHistoryEntry";
 
     const session = await getServerSession(authOptions);
 
@@ -191,27 +158,16 @@ export async function saveHistoryEntry(formData, timer_length, seconds_passed) {
 
         revalidatePath(`/timers/${timer}/history`);
 
-        const data = {
-            action: "saveHistoryEntry",
-            success: true,
-        };
-        console.log(data);
-        return data;
+        return actionSuccess(actionName);
     } catch (err) {
-        console.log(err);
-        const validationError = formatValidationError(err);
-        const data = {
-            action: "saveHistoryEntry",
-            success: false,
-            errors: validationError,
-        };
-        console.error(data);
-        return data;
+        return actionError(actionName, { errors: formatValidationError(err) });
     }
 }
 
 export async function deleteHistoryEntry(formData) {
     await connectToDB();
+
+    const actionName = "deleteHistoryEntry";
 
     const session = await getServerSession(authOptions);
 
@@ -222,10 +178,5 @@ export async function deleteHistoryEntry(formData) {
 
     revalidatePath(`/timers/${timerId}/history`);
 
-    const data = {
-        action: "deleteHistoryEntry",
-        success: true,
-    };
-    console.log(data);
-    return data;
+    return actionSuccess(actionName);
 }

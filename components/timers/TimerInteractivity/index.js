@@ -2,7 +2,7 @@
 
 import useInterval from "@/hooks/useInterval";
 import { useModalStore, useTimerStore } from "@/store";
-import formatSeconds from "@/utils/formatSeconds";
+import formatSeconds from "@/utils/general/formatSeconds";
 import { useEffect } from "react";
 import { CiStop1 } from "react-icons/ci";
 import { FiPlay } from "react-icons/fi";
