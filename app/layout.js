@@ -1,4 +1,4 @@
-import ModalWrapper from "./components/ModalWrapper";
+import ModalWrapper from "@/components/general/ModalWrapper";
 import "./globals.css";
 
 export const metadata = {

@@ -1,8 +1,8 @@
 import { getTimers } from "@/actions/timers";
+import Signout from "@/components/general/Signout";
+import NewTimerButton from "@/components/timers/NewTimerButton";
 import formatSeconds from "@/utils/formatSeconds";
 import Link from "next/link";
-import NewTimerButton from "./components/NewTimerButton";
-import Signout from "./components/Signout";
 import css from "./page.module.css";
 
 export default async function Home() {

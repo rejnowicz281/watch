@@ -1,6 +1,6 @@
 import { getTimerHistory } from "@/actions/timers";
-import GoBack from "./components/GoBack";
-import TimerHistory from "./components/TimerHistory";
+import BackLink from "@/components/general/BackLink";
+import TimerHistory from "@/components/history/TimerHistory";
 import css from "./page.module.css";
 
 export default async function HistoryPage({ params: { id } }) {
@@ -8,7 +8,7 @@ export default async function HistoryPage({ params: { id } }) {
 
     return (
         <div className={css.container}>
-            <GoBack id={id} />
+            <BackLink href={`/timers/${id}`} />
             <TimerHistory history={history} id={id} />
         </div>
     );

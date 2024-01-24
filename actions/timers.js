@@ -68,12 +68,15 @@ export async function createTimer(formData) {
     }
 }
 
-export async function updateTimerName(id, name) {
+export async function updateTimerName(formData) {
     await connectToDB();
 
     const session = await getServerSession(authOptions);
 
     try {
+        const name = formData.get("name");
+        const id = formData.get("id");
+
         const newTimer = await Timer.findOneAndUpdate(
             { _id: id, user: session?.user?._id },
             { name: name || undefined },
@@ -101,12 +104,15 @@ export async function updateTimerName(id, name) {
     }
 }
 
-export async function updateTimerLength(id, length) {
+export async function updateTimerLength(formData) {
     await connectToDB();
 
     const session = await getServerSession(authOptions);
 
     try {
+        const length = formData.get("length");
+        const id = formData.get("id");
+
         const newTimer = await Timer.findOneAndUpdate(
             { _id: id, user: session?.user?._id },
             { length },
@@ -134,10 +140,12 @@ export async function updateTimerLength(id, length) {
     }
 }
 
-export async function deleteTimer(id) {
+export async function deleteTimer(formData) {
     await connectToDB();
 
     const session = await getServerSession(authOptions);
+
+    const id = formData.get("id");
 
     await Timer.deleteOne({ _id: id, user: session?.user?._id });
 
@@ -202,10 +210,13 @@ export async function saveHistoryEntry(formData, timer_length, seconds_passed) {
     }
 }
 
-export async function deleteHistoryEntry(timerId, entryId) {
+export async function deleteHistoryEntry(formData) {
     await connectToDB();
 
     const session = await getServerSession(authOptions);
+
+    const entryId = formData.get("entryId");
+    const timerId = formData.get("timerId");
 
     await HistoryEntry.deleteOne({ _id: entryId, user: session?.user?._id, timer: timerId });
 
