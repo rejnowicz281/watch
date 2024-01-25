@@ -1,9 +1,9 @@
 "use client";
 
 import useInterval from "@/hooks/useInterval";
-import { useTimerStore } from "@/store";
+import useTimerContext from "@/providers/TimerContext";
 import formatSeconds from "@/utils/general/formatSeconds";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CiStop1 } from "react-icons/ci";
 import { FiPlay } from "react-icons/fi";
 import { PiPauseLight } from "react-icons/pi";
@@ -11,15 +11,9 @@ import { RxResume } from "react-icons/rx";
 import SaveHistoryEntry from "../SaveHistoryEntry";
 import css from "./index.module.css";
 
-export default function TimerInteractivity({ id, length }) {
+export default function TimerInteractivity() {
     const [showSave, setShowSave] = useState(false);
-    const { started, start, end, pause, paused, seconds, setSeconds } = useTimerStore();
-
-    useEffect(() => {
-        setSeconds(length);
-
-        return () => end();
-    }, []);
+    const { started, start, end, pause, paused, seconds, setSeconds, id, length } = useTimerContext();
 
     useInterval(countDown, paused ? null : 1000);
 

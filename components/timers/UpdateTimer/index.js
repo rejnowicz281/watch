@@ -2,15 +2,15 @@
 
 import { updateTimer } from "@/actions/timers";
 import SubmitButton from "@/components/history/TimerHistory/SubmitButton";
-import { useTimerStore } from "@/store";
+import useTimerContext from "@/providers/TimerContext";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
 import { FiSettings } from "react-icons/fi";
 import { IoMdClose } from "react-icons/io";
 import css from "./index.module.css";
 
-export default function UpdateTimer({ id, name, length }) {
-    const { setSeconds } = useTimerStore();
+export default function UpdateTimer() {
+    const { setSeconds, id, name, length } = useTimerContext();
 
     const [errors, setErrors] = useState(null);
     const [open, setOpen] = useState(false);

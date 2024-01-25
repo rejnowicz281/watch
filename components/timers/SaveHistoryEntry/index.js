@@ -2,15 +2,16 @@
 
 import { saveHistoryEntry } from "@/actions/timers";
 import SubmitButton from "@/components/history/TimerHistory/SubmitButton";
-import { useTimerStore } from "@/store";
+import useTimerContext from "@/providers/TimerContext";
 import formatSeconds from "@/utils/general/formatSeconds";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import css from "./index.module.css";
 
-export default function SaveHistoryEntry({ timerID, length, onExit }) {
-    const { seconds } = useTimerStore();
+export default function SaveHistoryEntry({ onExit }) {
+    const { seconds, id, length } = useTimerContext();
+
     const [errors, setErrors] = useState(null);
     const [open, setOpen] = useState(true);
     const secondsPassed = length - seconds;
@@ -41,7 +42,7 @@ export default function SaveHistoryEntry({ timerID, length, onExit }) {
                         {errors ? errors : "Save timer history entry. Click save when you're done."}
                     </Dialog.Description>
                     <form action={handleAction}>
-                        <input type="hidden" name="timer" value={timerID} />
+                        <input type="hidden" name="timer" value={id} />
                         <fieldset className={css.fieldset}>
                             <label className={css.label} htmlFor="note">
                                 Note

@@ -1,11 +1,11 @@
 "use client";
 
 import UpdateTimer from "@/components/timers/UpdateTimer";
-import { useTimerStore } from "@/store";
+import useTimerContext from "@/providers/TimerContext";
 
-export default function UpdateTimerButton({ id, name, length }) {
-    const { started } = useTimerStore();
+export default function UpdateTimerButton() {
+    const { started } = useTimerContext();
 
     if (started) return null;
-    else return <UpdateTimer id={id} name={name} length={length} />;
+    else return <UpdateTimer />;
 }
