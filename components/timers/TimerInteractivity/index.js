@@ -1,18 +1,18 @@
 "use client";
 
 import useInterval from "@/hooks/useInterval";
-import { useModalStore, useTimerStore } from "@/store";
+import { useTimerStore } from "@/store";
 import formatSeconds from "@/utils/general/formatSeconds";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CiStop1 } from "react-icons/ci";
 import { FiPlay } from "react-icons/fi";
 import { PiPauseLight } from "react-icons/pi";
 import { RxResume } from "react-icons/rx";
-import SaveHistoryEntry from "./SaveHistoryEntry";
+import SaveHistoryEntry from "../SaveHistoryEntry";
 import css from "./index.module.css";
 
 export default function TimerInteractivity({ id, length }) {
-    const { setModalContent, closeModal } = useModalStore();
+    const [showSave, setShowSave] = useState(false);
     const { started, start, end, pause, paused, seconds, setSeconds } = useTimerStore();
 
     useEffect(() => {
@@ -29,25 +29,22 @@ export default function TimerInteractivity({ id, length }) {
     }
 
     function handleEnd() {
-        setModalContent(
-            <SaveHistoryEntry
-                id={id}
-                onSaveSuccess={handleSaveSuccess}
-                secondsPassed={length - seconds}
-                length={length}
-            />
-        );
-        setSeconds(length);
         end();
-    }
-
-    function handleSaveSuccess() {
-        end();
-        closeModal();
+        setShowSave(true);
     }
 
     return (
-        <div>
+        <>
+            {showSave && (
+                <SaveHistoryEntry
+                    onExit={() => {
+                        setSeconds(length);
+                        setShowSave(false);
+                    }}
+                    timerID={id}
+                    length={length}
+                />
+            )}
             <h2 className={css.seconds}>{formatSeconds(started ? seconds : length)}</h2>
             <div className={css.buttons}>
                 <button className={css.button} onClick={paused ? start : pause}>
@@ -59,6 +56,6 @@ export default function TimerInteractivity({ id, length }) {
                     </button>
                 )}
             </div>
-        </div>
+        </>
     );
 }

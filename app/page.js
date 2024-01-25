@@ -1,6 +1,6 @@
 import { getTimers } from "@/actions/timers";
 import Signout from "@/components/general/Signout";
-import NewTimerButton from "@/components/timers/NewTimerButton";
+import CreateTimer from "@/components/timers/CreateTimer";
 import formatSeconds from "@/utils/general/formatSeconds";
 import Link from "next/link";
 import css from "./page.module.css";
@@ -11,7 +11,7 @@ export default async function Home() {
     return (
         <div className={css.container}>
             <div className={css.top}>
-                <NewTimerButton />
+                <CreateTimer />
                 <Signout />
             </div>
             <div className={css.main}>

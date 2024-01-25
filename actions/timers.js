@@ -59,20 +59,21 @@ export async function createTimer(formData) {
     }
 }
 
-export async function updateTimerName(formData) {
+export async function updateTimer(formData) {
     await connectToDB();
 
-    const actionName = "updateTimerName";
+    const actionName = "updateTimer";
 
     const session = await getServerSession(authOptions);
 
     try {
-        const name = formData.get("name");
+        const name = formData.get("name") || undefined;
+        const length = formData.get("length") || undefined;
         const id = formData.get("id");
 
         const newTimer = await Timer.findOneAndUpdate(
             { _id: id, user: session?.user?._id },
-            { name: name || undefined },
+            { name, length },
             { new: true, runValidators: true }
         );
 
@@ -80,31 +81,7 @@ export async function updateTimerName(formData) {
 
         return actionSuccess(actionName, { newTimer: JSON.stringify(newTimer) });
     } catch (err) {
-        return actionError(actionName, { errors: formatValidationError(err) });
-    }
-}
-
-export async function updateTimerLength(formData) {
-    await connectToDB();
-
-    const actionName = "updateTimerLength";
-
-    const session = await getServerSession(authOptions);
-
-    try {
-        const length = formData.get("length");
-        const id = formData.get("id");
-
-        const newTimer = await Timer.findOneAndUpdate(
-            { _id: id, user: session?.user?._id },
-            { length },
-            { new: true, runValidators: true }
-        );
-
-        revalidatePath(`/timers/${id}`);
-
-        return actionSuccess(actionName, { newTimer: JSON.stringify(newTimer) });
-    } catch (err) {
+        console.log(err);
         return actionError(actionName, { errors: formatValidationError(err) });
     }
 }
