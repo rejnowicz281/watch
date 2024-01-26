@@ -4,8 +4,7 @@ import { createTimer } from "@/actions/timers";
 import SubmitButton from "@/components/history/TimerHistory/SubmitButton";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
-import { IoMdClose } from "react-icons/io";
-import { MdOutlineAddBox } from "react-icons/md";
+import { IoIosAdd, IoMdClose } from "react-icons/io";
 import css from "./index.module.css";
 
 export default function CreateTimer() {
@@ -33,7 +32,7 @@ export default function CreateTimer() {
         <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger asChild>
                 <button className={css["trigger-button"]}>
-                    <MdOutlineAddBox />
+                    <IoIosAdd />
                 </button>
             </Dialog.Trigger>
             <Dialog.Portal>

@@ -1,0 +1,40 @@
+.timers-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.timers {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.timer {
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-m);
+    padding: var(--space-m) var(--space-l);
+}
+
+.timer:hover,
+.timer-active {
+    background-color: rgb(219, 219, 219);
+}
+
+.timer-name {
+    word-break: break-word;
+    font-size: var(--font-size-l);
+    color: rgb(68, 68, 68);
+}
+
+.timer-length {
+    color: rgb(102, 102, 102);
+    font-weight: bold;
+}

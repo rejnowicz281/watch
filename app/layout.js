@@ -1,4 +1,7 @@
+import Sidebar from "@/components/general/Sidebar";
+import TimersContainer from "@/components/timers/TimersContainer";
 import "./globals.css";
+import css from "./layout.module.css";
 
 export const metadata = {
     title: "Watch",
@@ -8,7 +11,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body>{children}</body>
+            <body>
+                <div className={css.container}>
+                    <Sidebar TimersContainer={<TimersContainer />} />
+                    <div className={css.main}>{children}</div>
+                </div>
+            </body>
         </html>
     );
 }

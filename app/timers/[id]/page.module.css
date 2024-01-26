@@ -1,23 +1,22 @@
 .container {
     padding: var(--space-xxl);
-}
-
-.top {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: var(--space-xxl);
-}
-
-.topright {
-    display: flex;
-    gap: var(--space-l);
-    align-items: center;
+    flex: 1;
 }
 
 .main {
+    flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-l);
 }
 
 .name {

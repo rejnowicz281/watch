@@ -1,0 +1,65 @@
+.open-sidebar,
+.collapsed-sidebar {
+    transition: 0.3s;
+    flex-shrink: 0;
+    width: 320px;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.collapsed-sidebar {
+    cursor: pointer;
+    width: 60px;
+}
+
+.collapsed-sidebar:hover {
+    background-color: rgb(236, 236, 236);
+}
+
+.collapsed-sidebar * {
+    position: relative;
+    left: -320px;
+    transition: 0.3s;
+    opacity: 0;
+}
+
+.open-sidebar * {
+    position: relative;
+    left: 0;
+    transition: 0.3s;
+    opacity: 1;
+}
+
+.toggle {
+    position: absolute;
+    top: var(--space-l);
+    left: var(--space-m);
+    background-color: inherit;
+    border: none;
+    border-radius: 50%;
+    font-size: var(--font-size-xl);
+}
+
+.toggle:hover {
+    background-color: rgb(219, 219, 219);
+    color: grey;
+}
+
+.create-timer-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin: var(--space-l) var(--space-m) var(--space-xl) var(--space-l);
+}
+
+.timers-heading {
+    font-size: var(--font-size-xl);
+    color: rgb(19, 19, 19);
+    margin: 0 var(--space-l) var(--space-s) var(--space-l);
+}
+
+.signout-wrapper {
+    display: flex;
+    margin: var(--space-l);
+}

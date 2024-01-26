@@ -53,15 +53,19 @@
 }
 
 .trigger-button {
-    font-size: var(--font-size-xxxl);
+    font-size: var(--font-size-xl);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: inherit;
     border: none;
+    border-radius: 50%;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 .trigger-button:hover {
-    color: rgb(189, 189, 189);
+    background-color: rgb(219, 219, 219);
+    color: grey;
 }
 
 .icon-button {

@@ -7,9 +7,11 @@ export default async function HistoryPage({ params: { id } }) {
     const history = await getTimerHistory(id);
 
     return (
-        <div className={css.container}>
-            <BackLink href={`/timers/${id}`} />
-            <TimerHistory history={history} id={id} />
+        <div className={css.wrapper}>
+            <div className={css.container}>
+                <BackLink href={`/timers/${id}`} />
+                <TimerHistory history={history} id={id} />
+            </div>
         </div>
     );
 }
