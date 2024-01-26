@@ -10,7 +10,7 @@ import { IoMdClose } from "react-icons/io";
 import css from "./index.module.css";
 
 export default function SaveHistoryEntry({ onExit }) {
-    const { seconds, id, length } = useTimerContext();
+    const { seconds, id, length, infinite } = useTimerContext();
 
     const [errors, setErrors] = useState(null);
     const [open, setOpen] = useState(true);
@@ -19,7 +19,7 @@ export default function SaveHistoryEntry({ onExit }) {
     async function handleAction(formData) {
         setErrors(null);
 
-        const res = await saveHistoryEntry(formData, length, secondsPassed);
+        const res = await saveHistoryEntry(formData, infinite ? seconds : secondsPassed, infinite ? null : length);
 
         if (res.success) setOpen(false);
         else setErrors(JSON.stringify(res.errors));
@@ -52,7 +52,11 @@ export default function SaveHistoryEntry({ onExit }) {
                         <div className={css["save-wrapper"]}>
                             <SubmitButton
                                 className={css["save-button"]}
-                                content={`Save Entry (${formatSeconds(secondsPassed)} / ${formatSeconds(length)})`}
+                                content={`Save Entry (${
+                                    infinite
+                                        ? formatSeconds(seconds)
+                                        : `${formatSeconds(secondsPassed)} / ${formatSeconds(length)}`
+                                })`}
                                 loading="Saving Entry..."
                             />
                         </div>

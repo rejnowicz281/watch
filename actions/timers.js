@@ -105,14 +105,17 @@ export async function getTimerHistory(id) {
 
     const session = await getServerSession(authOptions);
 
-    const history = await HistoryEntry.find({ timer: id, user: session?.user?._id }).sort({
+    const history = await HistoryEntry.find({
+        user: session?.user?._id,
+        timer: id === "infinite" ? undefined : id,
+    }).sort({
         createdAt: -1,
     });
 
     return history;
 }
 
-export async function saveHistoryEntry(formData, timer_length, seconds_passed) {
+export async function saveHistoryEntry(formData, seconds_passed, timer_length = null) {
     await connectToDB();
 
     const actionName = "saveHistoryEntry";
@@ -120,13 +123,13 @@ export async function saveHistoryEntry(formData, timer_length, seconds_passed) {
     const session = await getServerSession(authOptions);
 
     const note = formData.get("note");
-    const timer = formData.get("timer");
+    const timer = formData.get("timer") === "infinite" ? undefined : formData.get("timer");
 
     const entry = new HistoryEntry({
         note: note || undefined,
         seconds_passed,
-        timer_length,
-        timer,
+        timer_length: timer_length || undefined,
+        timer: timer || undefined,
         user: session?.user?._id,
     });
 
@@ -149,11 +152,11 @@ export async function deleteHistoryEntry(formData) {
     const session = await getServerSession(authOptions);
 
     const entryId = formData.get("entryId");
-    const timerId = formData.get("timerId");
+    const timer = formData.get("timer") === "infinite" ? undefined : formData.get("timer");
 
-    await HistoryEntry.deleteOne({ _id: entryId, user: session?.user?._id, timer: timerId });
+    await HistoryEntry.deleteOne({ _id: entryId, user: session?.user?._id, timer });
 
-    revalidatePath(`/timers/${timerId}/history`);
+    revalidatePath(`/timers/${timer}/history`);
 
     return actionSuccess(actionName);
 }

@@ -9,6 +9,10 @@ export default async function TimersContainer() {
     return (
         <div className={css["timers-wrapper"]}>
             <div className={css.timers}>
+                <NavLink href="/timers/infinite" className={css.timer} activeClassName={css["timer-active"]}>
+                    <h3 className={css["timer-name"]}>Infinite Timer</h3>
+                    <div className={css["timer-length"]}>∞</div>
+                </NavLink>
                 {timers.map((timer) => (
                     <NavLink
                         key={timer.id}

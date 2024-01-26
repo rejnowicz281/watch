@@ -12,12 +12,10 @@ const historyEntrySchema = new Schema(
         timer_length: {
             type: Number,
             min: [1, "Timer length must be greater than 0"],
-            required: true,
         },
         timer: {
             type: Schema.Types.ObjectId,
             ref: "Timer",
-            required: true,
         },
         user: {
             type: Schema.Types.ObjectId,

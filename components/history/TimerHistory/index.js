@@ -9,9 +9,13 @@ export default function TimerHistory({ history, id }) {
             <h1 className={css.heading}>History</h1>
             {history.map((entry) => (
                 <div className={css.entry} key={entry.id}>
-                    <h2>
-                        {formatSeconds(entry.seconds_passed)} / {formatSeconds(entry.timer_length)}
-                    </h2>
+                    {entry.timer_length ? (
+                        <h2>
+                            {formatSeconds(entry.seconds_passed)} / {formatSeconds(entry.timer_length)}
+                        </h2>
+                    ) : (
+                        <h2>{formatSeconds(entry.seconds_passed)}</h2>
+                    )}
                     <p>{formatDate(entry.createdAt)}</p>
                     {entry.note && <p className={css.note}>{entry.note}</p>}
                     <DeleteButton timerId={id} entryId={entry.id} />

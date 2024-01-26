@@ -11,4 +11,4 @@ A time-tracker app built with NextJS.
 ## To Do
 
 -   [ ] Format timer length input (MM:SS)
--   [ ] Implement infinite timer
+-   [x] Implement infinite timer

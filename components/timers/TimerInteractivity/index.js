@@ -13,13 +13,16 @@ import css from "./index.module.css";
 
 export default function TimerInteractivity() {
     const [showSave, setShowSave] = useState(false);
-    const { started, start, end, pause, paused, seconds, setSeconds, id, length } = useTimerContext();
+    const { started, start, end, pause, paused, seconds, setSeconds, length, infinite } = useTimerContext();
 
     useInterval(countDown, paused ? null : 1000);
 
     function countDown() {
-        if (seconds <= 0) handleEnd();
-        else setSeconds(seconds - 1);
+        if (infinite) setSeconds(seconds + 1);
+        else {
+            if (seconds <= 0) handleEnd();
+            setSeconds(seconds - 1);
+        }
     }
 
     function handleEnd() {
@@ -35,8 +38,6 @@ export default function TimerInteractivity() {
                         setSeconds(length);
                         setShowSave(false);
                     }}
-                    timerID={id}
-                    length={length}
                 />
             )}
             <h2 className={css.seconds}>{formatSeconds(started ? seconds : length)}</h2>

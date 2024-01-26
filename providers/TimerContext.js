@@ -4,7 +4,8 @@ import { createContext, useContext, useState } from "react";
 
 export const TimerContext = createContext();
 
-export function TimerProvider({ children, length, name, id }) {
+export function TimerProvider({ children, initialLength, name, id, infinite = false }) {
+    const length = infinite ? 0 : initialLength;
     const [started, setStarted] = useState(false);
     const [paused, setPaused] = useState(true);
     const [seconds, setSeconds] = useState(length);
@@ -36,6 +37,7 @@ export function TimerProvider({ children, length, name, id }) {
                 length,
                 id,
                 name,
+                infinite,
             }}
         >
             {children}
