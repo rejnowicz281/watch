@@ -11,15 +11,17 @@ export default async function TimerPage({ params: { id } }) {
 
     return (
         <TimerProvider id={id} name={timer.name} initialLength={timer.length}>
-            <div className={css.container}>
-                <div className={css.main}>
-                    <h1 className={css.name}>{timer.name}</h1>
-                    <TimerInteractivity />
-                </div>
-                <div className={css.right}>
-                    <HistoryLink id={id} />
-                    <UpdateTimerButton />
-                    <Delete />
+            <div className={css.wrapper}>
+                <div className={css.container}>
+                    <div className={css.main}>
+                        <h1 className={css.name}>{timer.name}</h1>
+                        <TimerInteractivity />
+                    </div>
+                    <div className={css.right}>
+                        <HistoryLink id={id} />
+                        <UpdateTimerButton />
+                        <Delete />
+                    </div>
                 </div>
             </div>
         </TimerProvider>
