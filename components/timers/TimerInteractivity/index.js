@@ -19,10 +19,8 @@ export default function TimerInteractivity() {
 
     function countDown() {
         if (infinite) setSeconds(seconds + 1);
-        else {
-            if (seconds <= 0) handleEnd();
-            setSeconds(seconds - 1);
-        }
+        else if (seconds <= 0) handleEnd();
+        else setSeconds(seconds - 1);
     }
 
     function handleEnd() {
