@@ -1,5 +1,5 @@
+import { AiOutlineHistory } from "@react-icons/all-files/ai/AiOutlineHistory";
 import Link from "next/link";
-import { AiOutlineHistory } from "react-icons/ai";
 import css from "./index.module.css";
 
 export default function HistoryLink({ id }) {

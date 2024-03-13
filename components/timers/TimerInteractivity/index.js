@@ -3,11 +3,11 @@
 import useInterval from "@/hooks/useInterval";
 import useTimerContext from "@/providers/TimerContext";
 import formatSeconds from "@/utils/general/formatSeconds";
+import { CiStop1 } from "@react-icons/all-files/ci/CiStop1";
+import { FiPlay } from "@react-icons/all-files/fi/FiPlay";
+import { PiPauseLight } from "@react-icons/all-files/pi/PiPauseLight";
+import { RxResume } from "@react-icons/all-files/rx/RxResume";
 import { useState } from "react";
-import { CiStop1 } from "react-icons/ci";
-import { FiPlay } from "react-icons/fi";
-import { PiPauseLight } from "react-icons/pi";
-import { RxResume } from "react-icons/rx";
 import SaveHistoryEntry from "../SaveHistoryEntry";
 import css from "./index.module.css";
 

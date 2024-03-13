@@ -3,8 +3,9 @@
 import { createTimer } from "@/actions/timers";
 import SubmitButton from "@/components/history/TimerHistory/SubmitButton";
 import * as Dialog from "@radix-ui/react-dialog";
+import { IoIosAdd } from "@react-icons/all-files/io/IoIosAdd";
+import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
 import { useEffect, useState } from "react";
-import { IoIosAdd, IoMdClose } from "react-icons/io";
 import css from "./index.module.css";
 
 export default function CreateTimer() {

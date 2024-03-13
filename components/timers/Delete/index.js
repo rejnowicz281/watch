@@ -4,7 +4,7 @@ import { deleteTimer } from "@/actions/timers";
 import SubmitButton from "@/components/history/TimerHistory/SubmitButton";
 import useTimerContext from "@/providers/TimerContext";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { BsTrash } from "react-icons/bs";
+import { BsTrash } from "@react-icons/all-files/bs/BsTrash";
 import css from "./index.module.css";
 
 export default function Delete() {

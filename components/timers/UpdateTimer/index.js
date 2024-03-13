@@ -4,9 +4,9 @@ import { updateTimer } from "@/actions/timers";
 import SubmitButton from "@/components/history/TimerHistory/SubmitButton";
 import useTimerContext from "@/providers/TimerContext";
 import * as Dialog from "@radix-ui/react-dialog";
+import { FiSettings } from "@react-icons/all-files/fi/FiSettings";
+import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
 import { useEffect, useState } from "react";
-import { FiSettings } from "react-icons/fi";
-import { IoMdClose } from "react-icons/io";
 import css from "./index.module.css";
 
 export default function UpdateTimer() {

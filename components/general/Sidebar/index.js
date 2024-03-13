@@ -1,8 +1,9 @@
 "use client";
 import Signout from "@/components/general/Signout";
 import CreateTimer from "@/components/timers/CreateTimer";
+import { MdOutlineKeyboardArrowLeft } from "@react-icons/all-files/md/MdOutlineKeyboardArrowLeft";
+import { MdOutlineKeyboardArrowRight } from "@react-icons/all-files/md/MdOutlineKeyboardArrowRight";
 import { useState } from "react";
-import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import css from "./index.module.css";
 
 export default function Sidebar({ TimersContainer }) {

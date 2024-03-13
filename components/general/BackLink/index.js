@@ -1,5 +1,5 @@
+import { BsArrowLeft } from "@react-icons/all-files/bs/BsArrowLeft";
 import Link from "next/link";
-import { BsArrowLeft } from "react-icons/bs";
 import css from "./index.module.css";
 
 export default function BackLink({ href }) {

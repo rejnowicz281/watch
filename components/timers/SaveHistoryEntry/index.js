@@ -5,8 +5,8 @@ import SubmitButton from "@/components/history/TimerHistory/SubmitButton";
 import useTimerContext from "@/providers/TimerContext";
 import formatSeconds from "@/utils/general/formatSeconds";
 import * as Dialog from "@radix-ui/react-dialog";
+import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
 import { useEffect, useState } from "react";
-import { IoMdClose } from "react-icons/io";
 import css from "./index.module.css";
 
 export default function SaveHistoryEntry({ onExit }) {
