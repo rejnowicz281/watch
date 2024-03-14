@@ -1,11 +1,11 @@
 "use server";
 
-import HistoryEntry from "@/models/historyEntry";
+import HistoryEntry from "@/models/history-entry";
 import Timer from "@/models/timer";
-import actionError from "@/utils/actions/actionError";
-import actionSuccess from "@/utils/actions/actionSuccess";
-import formatValidationError from "@/utils/actions/formatValidationError";
-import authOptions from "@/utils/general/authOptions";
+import actionError from "@/utils/actions/action-error";
+import actionSuccess from "@/utils/actions/action-success";
+import formatValidationError from "@/utils/actions/format-validation-error";
+import authOptions from "@/utils/general/auth-options";
 import { connectToDB } from "@/utils/general/database";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";

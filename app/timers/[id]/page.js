@@ -1,3 +1,3 @@
-import TimerPage from "@/components/timers/pages/TimerPage";
+import TimerPage from "@/components/timer-page";
 
-export default ({ params }) => <TimerPage params={params} />;
+export default ({ params: { id } }) => <TimerPage id={id} />;

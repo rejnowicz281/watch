@@ -1,3 +1,3 @@
-import InfiniteTimerPage from "@/components/timers/pages/InfiniteTimerPage";
+import TimerPage from "@/components/timer-page";
 
-export default () => <InfiniteTimerPage />;
+export default () => <TimerPage id="infinite" />;
