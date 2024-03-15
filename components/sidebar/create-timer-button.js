@@ -13,16 +13,19 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { IoIosAddCircleOutline } from "@react-icons/all-files/io/IoIosAddCircleOutline";
 import { useEffect, useState } from "react";
+import { Label } from "../ui/label";
 
 export default function UpdateTimer() {
     const [errors, setErrors] = useState(null);
     const [open, setOpen] = useState(false);
 
     async function handleAction(formData) {
-        const lengthInput = formData.get("length");
+        const minutesInput = formData.get("minutes");
+        const secondsInput = formData.get("seconds");
+        const lengthInput = parseInt(minutesInput) * 60 + parseInt(secondsInput);
+        formData.set("length", lengthInput);
 
         if (lengthInput !== "" && lengthInput > 0) {
             setErrors(null);
@@ -51,21 +54,42 @@ export default function UpdateTimer() {
                 <DialogHeader>
                     <DialogTitle>Create Timer</DialogTitle>
                     <DialogDescription>
-                        {errors ? errors : "Create timer. Click save when you're done."}
+                        {errors ? errors : "Create a timer. Length is in format mm:ss. Click save when you're done."}
                     </DialogDescription>
                 </DialogHeader>
-                <form className="grid gap-4" action={handleAction}>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
-                            Name
-                        </Label>
-                        <Input id="name" name="name" className="col-span-3" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="length" className="text-right">
-                            Length
-                        </Label>
-                        <Input id="length" name="length" placeholder="00:10" className="col-span-3" />
+                <form className="space-y-4" action={handleAction}>
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="name" className="text-right">
+                                Name
+                            </Label>
+                            <Input id="name" name="name" className="col-span-3" />
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="minutes" className="text-right">
+                                Length
+                            </Label>
+                            <div className="col-span-3 flex items-center gap-3">
+                                <Input
+                                    className="border w-[70px] text-center"
+                                    type="number"
+                                    placeholder="00"
+                                    name="minutes"
+                                    min="0"
+                                    id="minutes"
+                                />
+                                :
+                                <Input
+                                    className="border w-[70px] text-center"
+                                    type="number"
+                                    placeholder="00"
+                                    name="seconds"
+                                    min="0"
+                                    max="59"
+                                    id="seconds"
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     <DialogFooter>

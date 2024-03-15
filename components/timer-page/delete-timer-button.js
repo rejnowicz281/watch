@@ -43,7 +43,7 @@ export default function Delete() {
 
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <form action={handleDelete}>
+                    <form className="flex flex-col" action={handleDelete}>
                         <input type="hidden" name="id" value={id} />
 
                         <AlertDialogAction asChild>

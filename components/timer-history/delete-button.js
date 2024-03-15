@@ -38,7 +38,7 @@ export default function DeleteButton({ timerId, entryId }) {
 
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <form action={handleDelete}>
+                    <form className="flex flex-col" action={handleDelete}>
                         <input type="hidden" name="timer" value={timerId} />
                         <input type="hidden" name="entryId" value={entryId} />
 
