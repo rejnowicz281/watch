@@ -1,5 +1,7 @@
 import Sidebar from "@/components/sidebar";
 import TimersContainer from "@/components/sidebar/timers-container";
+import clsx from "clsx";
+import { GeistSans } from "geist/font/sans";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 
@@ -11,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html className="h-full" lang="en">
-            <body className="min-h-full flex flex-col">
+            <body className={clsx("min-h-full flex flex-col", GeistSans.className)}>
                 <NextTopLoader height={4} showSpinner={false} />
                 <div className="flex-1 flex flex-col lg:flex-row-reverse">
                     <div className="flex-1 flex relative">
